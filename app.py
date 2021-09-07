@@ -30,6 +30,4 @@ def submit_id():
 
 # main driver function
 if __name__ == '__main__':
-    if movie_library.loaded_in:
-        app.run()
-        # 607 id = Men in Black
+    app.run()
