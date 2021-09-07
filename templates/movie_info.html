@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Movie Information</title>
+</head>
+<body>
+    <p>
+        <form action="http://localhost:5000/" method = "POST">
+         <p><input type = "submit" name = "HomeButton" value = "Return Home" /></p>
+      </form>
+        {%if movie['title'] and movie['id'] and movie['genres'] and movie['keywords']%}
+            title ... {{movie['title']}} <br>
+            id ... {{movie['id']}} <br>
+            genres ... {{movie['genres']}} <br>
+            keywords ... {{movie['keywords']}} <br>
+        {%else%}
+            MOVIE REQUEST ERROR
+        {%endif%}
+        <br> ~~ RECOMMENDATIONS ~~ <br>
+        {%for curr_rec, curr_sim_metric in recs%}
+            {%if curr_rec['title'] and curr_rec['id'] and curr_rec['genres'] and curr_rec['keywords']%}
+                title ... {{curr_rec['title']}} <br>
+                id ... {{curr_rec['id']}} <br>
+                genres ... {{curr_rec['genres']}} <br>
+                keywords ... {{curr_rec['keywords']}} <br>
+                similarity metric ... {{curr_sim_metric}} <br>
+            {%else%}
+                MOVIE REQUEST ERROR
+            {%endif%}
+            <br>
+        {%endfor%}
+        <br>
+    </p>
+<!--  <form action="http://localhost:5000/movie_info/<movie>" method = "POST">-->
+<!--     <p><input type = "submit" name="home_button" value = "Return Home" /></p>-->
+<!--  </form>-->
+</body>
+</html>
