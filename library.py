@@ -13,18 +13,15 @@ class MovieLibrary:
         return info_list
 
     def __init__(self):
-        self.loaded_in = False
         self.library_db = pd.read_csv('csv_data/movies_library.csv', low_memory=False)
         self.library_db['genres'] = self.library_db['genres'].apply(self.read_in_string)
         self.library_db['keywords'] = self.library_db['keywords'].apply(self.read_in_string)
-        self.loaded_in = True
         self.NUM_REC_MOVIES = 5
 
     def id_to_movie(self, id_):
         curr_movie = self.library_db.loc[self.library_db['id'] == id_].squeeze()
         return curr_movie
 
-    # may not always be accurate
     def title_to_movie(self, title):
         return self.library_db.loc[self.library_db['title'] == title]
 
@@ -76,14 +73,8 @@ class MovieLibrary:
             for g_b in compared_genres:
                 if g_a == g_b:
                     shared_genres += 1.0
-        similar_genres_percent = shared_genres / float(len(rec_origin_movie['genres']))
+        similar_genres_percent = shared_genres / float(len(rec_genres))
         genre_check = similar_genres_percent > percent_cutoff
-        # if genre_check:
-        #     print("HITS GENRE CHECK")
-        #     print("title: " + str(rec_origin_movie['title']))
-        #     print("    genres: " + str(rec_genres))
-        #     print("title: " + str(compared_movie['title']))
-        #     print("    genres: " + str(compared_genres))
         return genre_check
 
     def get_recs_from_db(self, rec_origin_movie):
