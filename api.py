@@ -4,18 +4,29 @@ from library import MovieLibrary
 import json
 from pandas.io.json import to_json
 
-
 movie_library = MovieLibrary()
 app = Flask(__name__)
 api = Api(app)
 
 
-class MovieAccess(Resource):
+class MovieIdAccess(Resource):
     def get(self, movie_id):
         if movie_id == 0:
             return movie_library.get_random_movie().to_json()
         else:
             return movie_library.id_to_movie(movie_id).to_json()
+
+
+class MovieTitleAccess(Resource):
+    def get(self, movie_title):
+        if movie_title == "":
+            return movie_library.get_random_movie().to_json()
+        else:
+            movie_info = movie_library.title_to_movie(movie_title)
+            if movie_info is None:
+                return json.loads("MOVIE NOT FOUND")
+            else:
+                return movie_info.to_json()
 
 
 class MovieRecommender(Resource):
@@ -55,10 +66,10 @@ class CoupleRecommender(Resource):
             return "ERROR: NO RECOMMENDATIONS"
 
 
-api.add_resource(MovieAccess, "/MovieAccess/<int:movie_id>")
+api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
+api.add_resource(MovieIdAccess, "/MovieTitleAccess/<string:movie_title>")
 api.add_resource(MovieRecommender, "/MovieRecommender/<int:movie_id>")
 api.add_resource(CoupleRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
-
 
 if __name__ == "__main__":
     app.run(debug=True)
