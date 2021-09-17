@@ -24,7 +24,7 @@ class MovieIdAccess(Resource):
             return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
         else:
             # return movie_info.to_json(), 200
-            movie_json = jsonify(movie_info.to_dict())
+            movie_json = jsonify(movie_info.to_json(orient='records'))
             return movie_json
 
 
