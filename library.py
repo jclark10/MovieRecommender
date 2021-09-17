@@ -19,10 +19,7 @@ class MovieLibrary:
         self.NUM_REC_MOVIES = 5
 
     def id_to_movie(self, id_):
-        curr_movie = self.library_db.loc[self.library_db['id'] == id_]
-        print(curr_movie)
-        curr_movie = curr_movie.squeez()
-        print(curr_movie)
+        curr_movie = self.library_db.loc[self.library_db['id'] == id_].squeeze()
         return curr_movie
 
     def title_to_movie(self, title):
@@ -35,6 +32,13 @@ class MovieLibrary:
 
     def get_random_id(self):
         return self.get_random_movie()['id']
+
+    @staticmethod
+    def print_movie(movie):
+        print("title ... " + str(movie['title']))
+        print("    id ... " + str(movie['id']))
+        print("    genre ... " + ", ".join(movie['genres']))
+        print("    keywords ... " + ", ".join(movie['keywords']))
 
     @staticmethod
     def get_cs_list(kw_list):
@@ -111,18 +115,3 @@ class MovieLibrary:
 
     def get_combined_recs(self, movie_a, movie_b):
         return self.get_recs_from_db(self.combine_movies(movie_a, movie_b))
-
-    @staticmethod
-    def print_movie(movie):
-        print("title ... " + str(movie['title']))
-        print("    id ... " + str(movie['id']))
-        print("    genre ... " + ", ".join(movie['genres']))
-        print("    keywords ... " + ", ".join(movie['keywords']))
-
-    @staticmethod
-    def get_movie_info(movie):
-        title = "title ... " + str(movie['title'])
-        id_ = "id ... " + str(movie['id'])
-        genres = "genres ... " + ", ".join(movie['genres'])
-        keywords = "keywords ... " + ", ".join(movie['keywords'])
-        return title, id_, genres, keywords

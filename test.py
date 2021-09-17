@@ -1,33 +1,39 @@
 import json
 import requests
 
-# BASE = "http://127.0.0.1:5000/"
+# BASE = "http://127.0.0.1:5000/" LOCAL SERVER TESTING
 BASE = "https://movie-library-recommender.herokuapp.com/"
 
 # TESTING ID ACCESS
 curr_movie_id = "0"
-curr_movie_info = requests.get(BASE + "MovieIdAccess/" + curr_movie_id).json()
-if curr_movie_info == "ERROR: NO MOVIE WITH CURRENT ID":
-    print(curr_movie_info)
-else:
-    curr_json = json.loads(curr_movie_info)
-    print("title: " + str(curr_json['title']))
-    print("    genres: " + str(curr_json['genres']))
-    print("    keywords: " + str(curr_json['keywords']))
-    print("\n")
-    # curr_movie_id = str(curr_json['id'])
-    # movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
-    # json_info = json.loads(movie_recs)
-    # if json_info['data'] == 'ERROR: NO RECOMMENDATIONS FOUND':
-    #     print(movie_recs)
-    # else:
-    #     for index, curr_movie in enumerate(movie_recs):
-    #         movie_json = json.loads(curr_movie)
-    #         print("~~ NUMBER " + str(index + 1) + " ~~")
-    #         print("title: " + str(movie_json['title']))
-    #         print("    genres: " + str(movie_json['genres']))
-    #         print("    keywords: " + str(movie_json['keywords']))
-print("\n")
+movie_info_json = requests.get(BASE + "MovieIdAccess/" + curr_movie_id).json()
+print(movie_info_json)
+movie_info_dict = json.loads(movie_info_json)
+curr_movie_id = str(movie_info_dict['id'])
+movie_recs_json = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
+print(movie_recs_json)
+
+# if curr_movie_info == "ERROR: NO MOVIE WITH CURRENT ID":
+#     print(curr_movie_info)
+# else:
+#     curr_json = json.loads(curr_movie_info)
+#     print("title: " + str(curr_json['title']))
+#     print("    genres: " + str(curr_json['genres']))
+#     print("    keywords: " + str(curr_json['keywords']))
+#     print("\n")
+#     curr_movie_id = str(curr_json['id'])
+#     movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
+#     json_info = json.loads(movie_recs)
+#     if json_info['data'] == 'ERROR: NO RECOMMENDATIONS FOUND':
+#         print(movie_recs)
+#     else:
+#         for index, curr_movie in enumerate(movie_recs):
+#             movie_json = json.loads(curr_movie)
+#             print("~~ NUMBER " + str(index + 1) + " ~~")
+#             print("title: " + str(movie_json['title']))
+#             print("    genres: " + str(movie_json['genres']))
+#             print("    keywords: " + str(movie_json['keywords']))
+# print("\n")
 
 # TESTING TITLE ACCESS
 # curr_movie_title = "RANDOM"
