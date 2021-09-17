@@ -21,18 +21,18 @@ class MovieIdAccess(Resource):
     def get(self, movie_id):
         movie_info = movie_library.id_to_movie(movie_id)
         if movie_info.empty:
-            return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}
+            return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
         else:
-            return movie_info.to_json()
+            return movie_info.to_json(), 200
 
 
 class MovieTitleAccess(Resource):
     def get(self, movie_title):
         movie_info = movie_library.title_to_movie(movie_title)
         if movie_info.empty:
-            return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}
+            return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}, 404
         else:
-            return movie_info.to_json()
+            return movie_info.to_json(), 200
 
 
 class MovieRecommender(Resource):
@@ -40,9 +40,9 @@ class MovieRecommender(Resource):
         curr_movie = movie_library.id_to_movie(movie_id)
         movie_recs = movie_library.get_recs_from_db(curr_movie)
         if movie_recs.empty:
-            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
         else:
-            return movie_recs.to_json(orient='records')
+            return movie_recs.to_json(orient='records'), 200
 
 
 class CoupleRecommender(Resource):
@@ -51,9 +51,9 @@ class CoupleRecommender(Resource):
         movie_b = movie_library.id_to_movie(id_b)
         movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
         if movie_recs.empty:
-            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
         else:
-            return movie_recs.to_json(orient='records')
+            return movie_recs.to_json(orient='records'), 200
 
 
 api.add_resource(status, "/")
