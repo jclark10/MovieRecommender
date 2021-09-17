@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_restful import Api, Resource
 from library import MovieLibrary
 import json
@@ -23,7 +23,9 @@ class MovieIdAccess(Resource):
         if movie_info.empty:
             return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
         else:
-            return movie_info.to_json(), 200
+            # return movie_info.to_json(), 200
+            movie_json = jsonify(movie_info.to_dict(orient='records'))
+            return movie_json
 
 
 class MovieTitleAccess(Resource):
