@@ -19,7 +19,7 @@ class MovieIdAccess(Resource):
 
 class MovieTitleAccess(Resource):
     def get(self, movie_title):
-        if movie_title == "":
+        if movie_title == "RANDOM":
             return movie_library.get_random_movie().to_json()
         else:
             movie_info = movie_library.title_to_movie(movie_title)
@@ -67,7 +67,7 @@ class CoupleRecommender(Resource):
 
 
 api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
-api.add_resource(MovieIdAccess, "/MovieTitleAccess/<string:movie_title>")
+api.add_resource(MovieTitleAccess, "/MovieTitleAccess/<string:movie_title>")
 api.add_resource(MovieRecommender, "/MovieRecommender/<int:movie_id>")
 api.add_resource(CoupleRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 

@@ -23,7 +23,8 @@ class MovieLibrary:
         return curr_movie
 
     def title_to_movie(self, title):
-        return self.library_db.loc[self.library_db['title'] == title]
+        curr_movie = self.library_db.loc[self.library_db['title'] == title].squeeze()
+        return curr_movie
 
     def get_random_movie(self):
         rand_index = randrange(0, len(self.library_db))
