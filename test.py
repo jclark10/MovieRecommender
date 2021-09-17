@@ -10,6 +10,7 @@ movie_info_json = requests.get(BASE + "MovieIdAccess/" + curr_movie_id).json()
 print(movie_info_json)
 movie_info_dict = json.loads(movie_info_json)
 curr_movie_id = str(movie_info_dict['id'])
+print("id: " + curr_movie_id)
 movie_recs_json = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
 print(movie_recs_json)
 

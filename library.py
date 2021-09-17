@@ -19,19 +19,20 @@ class MovieLibrary:
         self.NUM_REC_MOVIES = 5
 
     def id_to_movie(self, id_):
-        curr_movie = self.library_db.loc[self.library_db['id'] == id_].squeeze()
-        return curr_movie
+        if id_ == 0:
+            return self.get_random_movie()
+        else:
+            return self.library_db.loc[self.library_db['id'] == id_].squeeze()
 
     def title_to_movie(self, title):
-        curr_movie = self.library_db.loc[self.library_db['title'] == title].squeeze()
-        return curr_movie
+        if title == "RANDOM":
+            return self.get_random_movie()
+        else:
+            return self.library_db.loc[self.library_db['title'] == title].squeeze()
 
     def get_random_movie(self):
         rand_index = randrange(0, len(self.library_db))
         return self.library_db.iloc[[rand_index]].squeeze()
-
-    def get_random_id(self):
-        return self.get_random_movie()['id']
 
     @staticmethod
     def print_movie(movie):
@@ -85,25 +86,25 @@ class MovieLibrary:
         genre_check = similar_genres_percent > percent_cutoff
         return genre_check
 
-    def get_recs_from_db(self, rec_origin_movie):
-        rec_origin_movie = rec_origin_movie.squeeze()
+    def get_recs_from_db(self, origin_movie):
         sm_total_list = list()
         for index, compared_movie in self.library_db.iterrows():
-            if isinstance(compared_movie['title'], str):
-                if self.check_movies_different(rec_origin_movie, compared_movie):
-                    if self.check_genres_similar(rec_origin_movie, compared_movie):
-                        temp_sm = self.calculate_similarity(
-                            rec_origin_movie['keywords'],
-                            compared_movie['keywords'])
-                        if len(sm_total_list) < self.NUM_REC_MOVIES:
-                            sm_total_list.append((compared_movie, temp_sm))
-                        elif temp_sm > sm_total_list[self.NUM_REC_MOVIES - 1][1]:
-                            sm_total_list.append((compared_movie, temp_sm))
-                            sm_total_list.sort(key=lambda x: x[1])
-                            sm_total_list = sm_total_list[0:self.NUM_REC_MOVIES]
-        for ind, movie in enumerate(sm_total_list):
-            print(str(movie[0]['title']) + " ... " + str(movie[1]))
-        return [movie_sm[0] for movie_sm in sm_total_list]
+            title_is_string = isinstance(compared_movie['title'], str)
+            different_movie = self.check_movies_different(origin_movie, compared_movie)
+            similar_genres = self.check_genres_similar(origin_movie, compared_movie)
+            if title_is_string and different_movie and similar_genres:
+                temp_sm = self.calculate_similarity(
+                    origin_movie['keywords'],
+                    compared_movie['keywords'])
+                if len(sm_total_list) < self.NUM_REC_MOVIES:
+                    sm_total_list.append((compared_movie, temp_sm))
+                elif temp_sm > sm_total_list[self.NUM_REC_MOVIES - 1][1]:
+                    sm_total_list.append((compared_movie, temp_sm))
+                    sm_total_list.sort(key=lambda x: x[1])
+                    sm_total_list = sm_total_list[0:self.NUM_REC_MOVIES]
+        sm_total_list = [movie_sm[0] for movie_sm in sm_total_list]
+        recs_dataframe = pd.DataFrame(sm_total_list)
+        return recs_dataframe
 
     def combine_movies(self, movie_a, movie_b):
         id_ = self.library_db['id'].max() + 1

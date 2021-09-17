@@ -19,62 +19,41 @@ class status(Resource):
 
 class MovieIdAccess(Resource):
     def get(self, movie_id):
-        if movie_id == 0:
-            return movie_library.get_random_movie().to_json()
+        movie_info = movie_library.id_to_movie(movie_id)
+        if movie_info.empty:
+            return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}
         else:
-            movie_info = movie_library.id_to_movie(movie_id)
-            if movie_info.empty:
-                return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}
-            else:
-                return movie_info.to_json()
+            return movie_info.to_json()
 
 
 class MovieTitleAccess(Resource):
     def get(self, movie_title):
-        if movie_title == "RANDOM":
-            return movie_library.get_random_movie().to_json()
+        movie_info = movie_library.title_to_movie(movie_title)
+        if movie_info.empty:
+            return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}
         else:
-            movie_info = movie_library.title_to_movie(movie_title)
-            if movie_info.empty:
-                return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}
-            else:
-                return movie_info.to_json()
+            return movie_info.to_json()
 
 
 class MovieRecommender(Resource):
     def get(self, movie_id):
-        if movie_id == 0:
-            curr_movie = movie_library.get_random_movie()
-        else:
-            curr_movie = movie_library.id_to_movie(movie_id)
+        curr_movie = movie_library.id_to_movie(movie_id)
         movie_recs = movie_library.get_recs_from_db(curr_movie)
-        if len(movie_recs) == movie_library.NUM_REC_MOVIES:
-            mr_list = list()
-            for rec in movie_recs:
-                mr_list.append(rec.to_json())
-            return mr_list
-        else:
+        if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
+        else:
+            return movie_recs.to_json(orient ='records')
 
 
 class CoupleRecommender(Resource):
     def get(self, id_a, id_b):
-        if id_a == 0:
-            movie_a = movie_library.get_random_movie()
-        else:
-            movie_a = movie_library.id_to_movie(id_a)
-        if id_b == 0:
-            movie_b = movie_library.get_random_movie()
-        else:
-            movie_b = movie_library.id_to_movie(id_a)
+        movie_a = movie_library.id_to_movie(id_a)
+        movie_b = movie_library.id_to_movie(id_b)
         movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
-        if len(movie_recs) == movie_library.NUM_REC_MOVIES:
-            mr_list = list()
-            for rec in movie_recs:
-                mr_list.append(rec.to_json())
-            return mr_list
-        else:
+        if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
+        else:
+            return movie_recs.to_json(orient='records')
 
 
 api.add_resource(status, "/")
