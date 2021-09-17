@@ -9,6 +9,14 @@ app = Flask(__name__)
 api = Api(app)
 
 
+class status(Resource):
+    def get(self):
+        try:
+            return {'data': 'Api is Running'}
+        except:
+            return {'data': 'An Error Occurred during fetching Api'}
+
+
 class MovieIdAccess(Resource):
     def get(self, movie_id):
         if movie_id == 0:
@@ -70,6 +78,7 @@ class CoupleRecommender(Resource):
             return "ERROR: NO RECOMMENDATIONS"
 
 
+api.add_resource(status, "/")
 api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
 api.add_resource(MovieTitleAccess, "/MovieTitleAccess/<string:movie_title>")
 api.add_resource(MovieRecommender, "/MovieRecommender/<int:movie_id>")
