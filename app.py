@@ -32,7 +32,7 @@ class MovieTitleAccess(Resource):
         if movie_info.empty:
             return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}
         else:
-            return movie_info.to_json(orient='records')
+            return movie_info.to_json()
 
 
 class MovieRecommender(Resource):
@@ -53,7 +53,7 @@ class CoupleRecommender(Resource):
         if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
         else:
-            return movie_recs.to_json()
+            return movie_recs.to_json(orient='records')
 
 
 api.add_resource(status, "/")
