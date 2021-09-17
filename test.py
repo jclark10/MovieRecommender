@@ -3,45 +3,52 @@ import requests
 
 BASE = "http://127.0.0.1:5000/"
 
-## TESTING ID ACCESS
-# curr_movie_id = "0"
-# curr_movie_info = requests.get(BASE + "MovieIdAccess/" + curr_movie_id).json()
-# curr_json = json.loads(curr_movie_info)
-# print("title: " + str(curr_json['title']))
-# print("    genres: " + str(curr_json['genres']))
-# print("    keywords: " + str(curr_json['keywords']))
-# print("\n")
-# curr_movie_id = str(curr_json['id'])
-# movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
-# if movie_recs == "ERROR: NO RECOMMENDATIONS":
-#     print(movie_recs)
-# else:
-#     for i in movie_recs:
-#         movie_json = json.loads(i)
-#         print("title: " + str(movie_json['title']))
-#         print("    genres: " + str(movie_json['genres']))
-#         print("    keywords: " + str(movie_json['keywords']))
-# print("\n")
-
-## TESTING TITLE ACCESS
-curr_movie_title = "Forrest Gump"
-curr_movie_info = requests.get(BASE + "MovieTitleAccess/" + curr_movie_title).json()
-curr_json = json.loads(curr_movie_info)
-print("title: " + str(curr_json['title']))
-print("    genres: " + str(curr_json['genres']))
-print("    keywords: " + str(curr_json['keywords']))
-print("\n")
-curr_movie_id = str(curr_json['id'])
-movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
-if movie_recs == "ERROR: NO RECOMMENDATIONS":
-    print(movie_recs)
+# TESTING ID ACCESS
+curr_movie_id = "0"
+curr_movie_info = requests.get(BASE + "MovieIdAccess/" + curr_movie_id).json()
+if curr_movie_info == "ERROR: NO MOVIE WITH CURRENT ID":
+    print(curr_movie_info)
 else:
-    for index, curr_movie in enumerate(movie_recs):
-        movie_json = json.loads(curr_movie)
-        print("~~ NUMBER " + str(index) + " ~~")
-        print("title: " + str(movie_json['title']))
-        print("    genres: " + str(movie_json['genres']))
-        print("    keywords: " + str(movie_json['keywords']))
+    curr_json = json.loads(curr_movie_info)
+    print("title: " + str(curr_json['title']))
+    print("    genres: " + str(curr_json['genres']))
+    print("    keywords: " + str(curr_json['keywords']))
+    print("\n")
+    curr_movie_id = str(curr_json['id'])
+    movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
+    if movie_recs == "ERROR: NO RECOMMENDATIONS":
+        print(movie_recs)
+    else:
+        for index, curr_movie in enumerate(movie_recs):
+            movie_json = json.loads(curr_movie)
+            print("~~ NUMBER " + str(index + 1) + " ~~")
+            print("title: " + str(movie_json['title']))
+            print("    genres: " + str(movie_json['genres']))
+            print("    keywords: " + str(movie_json['keywords']))
+print("\n")
+
+# TESTING TITLE ACCESS
+curr_movie_title = "RANDOM"
+curr_movie_info = requests.get(BASE + "MovieTitleAccess/" + curr_movie_title).json()
+if curr_movie_info == "ERROR: NO MOVIE WITH CURRENT TITLE":
+    print(curr_movie_info)
+else:
+    curr_json = json.loads(curr_movie_info)
+    print("title: " + str(curr_json['title']))
+    print("    genres: " + str(curr_json['genres']))
+    print("    keywords: " + str(curr_json['keywords']))
+    print("\n")
+    curr_movie_id = str(curr_json['id'])
+    movie_recs = requests.get(BASE + "MovieRecommender/" + curr_movie_id).json()
+    if movie_recs == "ERROR: NO RECOMMENDATIONS":
+        print(movie_recs)
+    else:
+        for index, curr_movie in enumerate(movie_recs):
+            movie_json = json.loads(curr_movie)
+            print("~~ NUMBER " + str(index + 1) + " ~~")
+            print("title: " + str(movie_json['title']))
+            print("    genres: " + str(movie_json['genres']))
+            print("    keywords: " + str(movie_json['keywords']))
 print("\n")
 
 # id_a = "627"

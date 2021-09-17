@@ -14,7 +14,11 @@ class MovieIdAccess(Resource):
         if movie_id == 0:
             return movie_library.get_random_movie().to_json()
         else:
-            return movie_library.id_to_movie(movie_id).to_json()
+            movie_info = movie_library.id_to_movie(movie_id)
+            if movie_info.empty:
+                return "ERROR: NO MOVIE WITH CURRENT ID"
+            else:
+                return movie_info.to_json()
 
 
 class MovieTitleAccess(Resource):
@@ -23,8 +27,8 @@ class MovieTitleAccess(Resource):
             return movie_library.get_random_movie().to_json()
         else:
             movie_info = movie_library.title_to_movie(movie_title)
-            if movie_info is None:
-                return json.loads("MOVIE NOT FOUND")
+            if movie_info.empty:
+                return "ERROR: NO MOVIE WITH CURRENT TITLE"
             else:
                 return movie_info.to_json()
 
