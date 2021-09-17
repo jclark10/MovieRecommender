@@ -42,7 +42,7 @@ class MovieRecommender(Resource):
         if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
         else:
-            return movie_recs.to_json(orient ='records')
+            return movie_recs.to_json()
 
 
 class CoupleRecommender(Resource):
@@ -53,7 +53,7 @@ class CoupleRecommender(Resource):
         if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
         else:
-            return movie_recs.to_json(orient='records')
+            return movie_recs.to_json()
 
 
 api.add_resource(status, "/")
