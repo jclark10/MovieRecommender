@@ -19,7 +19,10 @@ class MovieLibrary:
         self.NUM_REC_MOVIES = 5
 
     def id_to_movie(self, id_):
-        curr_movie = self.library_db.loc[self.library_db['id'] == id_].squeeze()
+        curr_movie = self.library_db.loc[self.library_db['id'] == id_]
+        print(curr_movie)
+        curr_movie = curr_movie.squeez()
+        print(curr_movie)
         return curr_movie
 
     def title_to_movie(self, title):

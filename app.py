@@ -24,7 +24,7 @@ class MovieIdAccess(Resource):
         else:
             movie_info = movie_library.id_to_movie(movie_id)
             if movie_info.empty:
-                return "ERROR: NO MOVIE WITH CURRENT ID"
+                return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}
             else:
                 return movie_info.to_json()
 
@@ -36,7 +36,7 @@ class MovieTitleAccess(Resource):
         else:
             movie_info = movie_library.title_to_movie(movie_title)
             if movie_info.empty:
-                return "ERROR: NO MOVIE WITH CURRENT TITLE"
+                return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}
             else:
                 return movie_info.to_json()
 
@@ -54,7 +54,7 @@ class MovieRecommender(Resource):
                 mr_list.append(rec.to_json())
             return mr_list
         else:
-            return "ERROR: NO RECOMMENDATIONS"
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
 
 
 class CoupleRecommender(Resource):
@@ -68,14 +68,13 @@ class CoupleRecommender(Resource):
         else:
             movie_b = movie_library.id_to_movie(id_a)
         movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
-        print("found " + str(len(movie_recs)) + " movies")
         if len(movie_recs) == movie_library.NUM_REC_MOVIES:
             mr_list = list()
             for rec in movie_recs:
                 mr_list.append(rec.to_json())
             return mr_list
         else:
-            return "ERROR: NO RECOMMENDATIONS"
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}
 
 
 api.add_resource(status, "/")
