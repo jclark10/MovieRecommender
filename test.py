@@ -4,7 +4,7 @@ import requests
 BASE = "https://movie-library-recommender.herokuapp.com/"
 
 # TESTING ID ACCESS
-curr_movie_id = "0"
+curr_movie_id = "13"
 movie_info_json = requests.get(BASE + "MovieInfoAccess/" + curr_movie_id).json()
 print(movie_info_json)
 print("\n")

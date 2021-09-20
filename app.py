@@ -33,22 +33,6 @@ class MovieTitleAccess(Resource):
             return movie_info.to_json(), 200
 
 
-class MovieInfoAccess(Resource):
-    def get(self, movie):
-        if movie.isnumeric():
-            movie_info = movie_library.id_to_movie(movie)
-            if movie_info.empty:
-                return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
-            else:
-                return movie_info.to_json(), 200
-        else:
-            movie_info = movie_library.title_to_movie(movie)
-            if movie_info.empty:
-                return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}, 404
-            else:
-                return movie_info.to_json(), 200
-
-
 class MovieRecommender(Resource):
     def get(self, movie_id):
         curr_movie = movie_library.id_to_movie(movie_id)
@@ -71,9 +55,10 @@ class CoupleRecommender(Resource):
 
 
 api.add_resource(status, "/")
-api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
-api.add_resource(MovieTitleAccess, "/MovieTitleAccess/<string:movie_title>")
-api.add_resource(MovieInfoAccess, "/MovieInfoAccess/<movie>")
+# api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
+# api.add_resource(MovieTitleAccess, "/MovieTitleAccess/<string:movie_title>")
+api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
+api.add_resource(MovieTitleAccess, "/MovieInfoAccess/<string:movie_title>")
 api.add_resource(MovieRecommender, "/MovieRecommender/<int:movie_id>")
 api.add_resource(CoupleRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 
