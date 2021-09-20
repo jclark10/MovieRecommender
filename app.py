@@ -21,7 +21,7 @@ class MovieIdAccess(Resource):
         if movie_info.empty:
             return "{'data': 'ERROR: NO MOVIE WITH CURRENT ID'}", 404
         else:
-            return movie_info.to_json().replace("\", """), 200
+            return movie_info.to_json().replace("\\", ""), 200
 
 
 class MovieTitleAccess(Resource):
@@ -30,7 +30,7 @@ class MovieTitleAccess(Resource):
         if movie_info.empty:
             return "{'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}", 404
         else:
-            return movie_info.to_json().replace("\", """), 200
+            return movie_info.to_json().replace("\\", ""), 200
 
 
 class MovieRecommender(Resource):
