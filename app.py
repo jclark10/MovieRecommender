@@ -35,13 +35,13 @@ class MovieTitleAccess(Resource):
 
 class MovieInfoAccess(Resource):
     def get(self, movie):
-        if isinstance(movie, int):
+        if movie.isnumeric():
             movie_info = movie_library.id_to_movie(movie)
             if movie_info.empty:
                 return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
             else:
                 return movie_info.to_json(), 200
-        if isinstance(movie, str):
+        else:
             movie_info = movie_library.title_to_movie(movie)
             if movie_info.empty:
                 return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}, 404
