@@ -33,7 +33,7 @@ class MovieTitleAccess(Resource):
             return movie_info.to_json(), 200
 
 
-class MovieRecommender(Resource):
+class MovieIdRecommender(Resource):
     def get(self, movie_id):
         curr_movie = movie_library.id_to_movie(movie_id)
         movie_recs = movie_library.get_recs_from_db(curr_movie)
@@ -43,7 +43,17 @@ class MovieRecommender(Resource):
             return movie_recs.to_json(orient='records'), 200
 
 
-class CoupleRecommender(Resource):
+class MovieTitleRecommender(Resource):
+    def get(self, movie_title):
+        curr_movie = movie_library.title_to_movie(movie_title)
+        movie_recs = movie_library.get_recs_from_db(curr_movie)
+        if movie_recs.empty:
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
+        else:
+            return movie_recs.to_json(orient='records'), 200
+
+
+class CoupleIdRecommender(Resource):
     def get(self, id_a, id_b):
         movie_a = movie_library.id_to_movie(id_a)
         movie_b = movie_library.id_to_movie(id_b)
@@ -54,13 +64,24 @@ class CoupleRecommender(Resource):
             return movie_recs.to_json(orient='records'), 200
 
 
+class CoupleTitleRecommender(Resource):
+    def get(self, title_a, title_b):
+        movie_a = movie_library.id_to_movie(title_a)
+        movie_b = movie_library.id_to_movie(title_b)
+        movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
+        if movie_recs.empty:
+            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
+        else:
+            return movie_recs.to_json(orient='records'), 200
+
+
 api.add_resource(status, "/")
-# api.add_resource(MovieIdAccess, "/MovieIdAccess/<int:movie_id>")
-# api.add_resource(MovieTitleAccess, "/MovieTitleAccess/<string:movie_title>")
 api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
 api.add_resource(MovieTitleAccess, "/MovieInfoAccess/<string:movie_title>")
-api.add_resource(MovieRecommender, "/MovieRecommender/<int:movie_id>")
-api.add_resource(CoupleRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
+api.add_resource(MovieIdRecommender, "/MovieRecommender/<int:movie_id>")
+api.add_resource(MovieTitleRecommender, "/MovieRecommender/<string:movie_title>")
+api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
+api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<string:title_a>/<string:title_b>")
 
 if __name__ == "__main__":
     app.run(debug=True)
