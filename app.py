@@ -1,8 +1,6 @@
 from flask import Flask, jsonify
 from flask_restful import Api, Resource
 from library import MovieLibrary
-import json
-from pandas.io.json import to_json
 
 movie_library = MovieLibrary()
 app = Flask(__name__)
@@ -21,18 +19,18 @@ class MovieIdAccess(Resource):
     def get(self, movie_id):
         movie_info = movie_library.id_to_movie(movie_id)
         if movie_info.empty:
-            return {'data': 'ERROR: NO MOVIE WITH CURRENT ID'}, 404
+            return "{'data': 'ERROR: NO MOVIE WITH CURRENT ID'}", 404
         else:
-            return movie_info.to_json(orient='values'), 200
+            return movie_info.to_json().replace("\", """), 200
 
 
 class MovieTitleAccess(Resource):
     def get(self, movie_title):
         movie_info = movie_library.title_to_movie(movie_title)
         if movie_info.empty:
-            return {'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}, 404
+            return "{'data': 'ERROR: NO MOVIE WITH CURRENT TITLE'}", 404
         else:
-            return movie_info.to_json(), 200
+            return movie_info.to_json().replace("\", """), 200
 
 
 class MovieRecommender(Resource):
@@ -40,7 +38,7 @@ class MovieRecommender(Resource):
         curr_movie = movie_library.id_to_movie(movie_id)
         movie_recs = movie_library.get_recs_from_db(curr_movie)
         if movie_recs.empty:
-            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
+            return "{'data': 'ERROR: NO RECOMMENDATIONS FOUND'}", 404
         else:
             return movie_recs.to_json(orient='records'), 200
 
@@ -51,7 +49,7 @@ class CoupleRecommender(Resource):
         movie_b = movie_library.id_to_movie(id_b)
         movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
         if movie_recs.empty:
-            return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
+            return "{'data': 'ERROR: NO RECOMMENDATIONS FOUND'}", 404
         else:
             return movie_recs.to_json(orient='records'), 200
 
