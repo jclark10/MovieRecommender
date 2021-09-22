@@ -88,6 +88,7 @@ class MovieLibrary:
 
     def get_recs_from_db(self, origin_movie):
         sm_total_list = list()
+        movies_compared = 0
         for index, compared_movie in self.library_db.iterrows():
             title_is_string = isinstance(compared_movie['title'], str)
             different_movie = self.check_movies_different(origin_movie, compared_movie)
@@ -96,7 +97,8 @@ class MovieLibrary:
                 temp_sm = self.calculate_similarity(
                     origin_movie['keywords'],
                     compared_movie['keywords'])
-                print(temp_sm)
+                movies_compared += 1
+                print(movies_compared)
                 if len(sm_total_list) < self.NUM_REC_MOVIES:
                     sm_total_list.append((compared_movie, temp_sm))
                 elif temp_sm > sm_total_list[self.NUM_REC_MOVIES - 1][1]:
