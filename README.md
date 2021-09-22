@@ -41,4 +41,10 @@ I did this so that there would not be any confusion between id numbers and movie
 Examples include Roland Emmerich's 2012 and Brian Helgeland's 42.
 If I build a solution to this problem in the future, I will be sure to return access to these API routes. 
 
+## Possible Future Additions
+
+- Refining the genre overlap metric and the keywords similarity metric
+- Speeding up the process for finding suggestions
+- Allowing for a list of movies to be sent to the Movie Recommender, instead of just 1 or 2
+
 
