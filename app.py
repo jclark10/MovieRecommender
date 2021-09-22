@@ -47,6 +47,7 @@ class MovieTitleRecommender(Resource):
     def get(self, movie_title):
         curr_movie = movie_library.title_to_movie(movie_title)
         movie_recs = movie_library.get_recs_from_db(curr_movie)
+        print("Movie Recs Found? " + str(not movie_recs.empty))
         if movie_recs.empty:
             print("HITS EMPTY RETURN")
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
