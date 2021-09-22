@@ -84,7 +84,6 @@ class MovieLibrary:
                     shared_genres += 1.0
         similar_genres_percent = shared_genres / float(len(rec_genres))
         genre_check = similar_genres_percent > percent_cutoff
-        print(genre_check)
         return genre_check
 
     def get_recs_from_db(self, origin_movie):
@@ -97,6 +96,7 @@ class MovieLibrary:
                 temp_sm = self.calculate_similarity(
                     origin_movie['keywords'],
                     compared_movie['keywords'])
+                print(temp_sm)
                 if len(sm_total_list) < self.NUM_REC_MOVIES:
                     sm_total_list.append((compared_movie, temp_sm))
                 elif temp_sm > sm_total_list[self.NUM_REC_MOVIES - 1][1]:
