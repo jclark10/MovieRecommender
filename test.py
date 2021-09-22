@@ -6,7 +6,7 @@ BASE = "https://movie-library-recommender.herokuapp.com/"
 # movie_id = "13"
 # id_info_json = requests.get(BASE + "/MovieInfoAccess/" + movie_id).json()
 
-movie_title = "Forrest Gump"
+movie_title = "42"
 title_info_url = BASE + "MovieInfoAccess/" + movie_title
 print(title_info_url)
 title_info_json = requests.get(title_info_url).json()
