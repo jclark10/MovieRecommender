@@ -46,11 +46,11 @@ class MovieIdRecommender(Resource):
 class MovieTitleRecommender(Resource):
     def get(self, movie_title):
         curr_movie = movie_library.title_to_movie(movie_title)
-        print("NO MOVIE FOUND == " + str(curr_movie.empty))
         movie_recs = movie_library.get_recs_from_db(curr_movie)
         if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
         else:
+            print("HITS CORRECT JSON RETURN")
             return movie_recs.to_json(orient='records'), 200
 
 
