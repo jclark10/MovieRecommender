@@ -90,4 +90,4 @@ api.add_resource(CoupleTitleRecommender, "/CoupleRecommender/<string:title_a>/<s
 # api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
