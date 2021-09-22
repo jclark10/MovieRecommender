@@ -1,20 +1,20 @@
 import json
 import requests
 
-BASE = "https://movie-library-recommender.herokuapp.com/"
+BASE = "https://movie-library-recommender.herokuapp.com"
 
 # movie_id = "13"
-# id_info_json = requests.get(BASE + "MovieInfoAccess/" + movie_id).json()
+# id_info_json = requests.get(BASE + "/MovieInfoAccess/" + movie_id).json()
 movie_title = "Forrest Gump"
-title_info_json = requests.get(BASE + "MovieInfoAccess/" + movie_title).json()
+title_info_json = requests.get(BASE + "/MovieInfoAccess/" + movie_title).json()
 # print(id_info_json == title_info_json)
 
 # id_info_dict = json.loads(id_info_json)
 # movie_id = str(id_info_dict["id"])
-# id_recs_json = requests.get(BASE + "MovieRecommender/" + movie_id).json()
+# id_recs_json = requests.get(BASE + "/MovieRecommender/" + movie_id).json()
 title_info_dict = json.loads(title_info_json)
 movie_title = str(title_info_dict["title"])
-title_recs_json = requests.get(BASE + "MovieRecommender/" + movie_title).json()
+title_recs_json = requests.get(BASE + "/MovieRecommender/" + movie_title).json()
 # print(id_recs_json == title_recs_json)
 
 # info_json_formatted_str = json.dumps(id_info_dict, indent=2)
@@ -26,11 +26,11 @@ title_recs_json = requests.get(BASE + "MovieRecommender/" + movie_title).json()
 
 # a_id = "2832"
 # b_id = "17654"
-# id_couple_recs_json = requests.get(BASE + "CoupleRecommender/" + a_id + "/" + b_id).json()
+# id_couple_recs_json = requests.get(BASE + "/CoupleRecommender/" + a_id + "/" + b_id).json()
 
 a_title = "Identity"
 b_title = "District 9"
-titles_couple_recs_json = requests.get(BASE + "CoupleRecommender/" + a_title + "/" + b_title).json()
+titles_couple_recs_json = requests.get(BASE + "/CoupleRecommender/" + a_title + "/" + b_title).json()
 
 couple_recs_dict = json.loads(titles_couple_recs_json)
 couple_recs_string = json.dumps(couple_recs_dict, indent=2)

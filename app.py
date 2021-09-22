@@ -75,13 +75,16 @@ class CoupleTitleRecommender(Resource):
             return movie_recs.to_json(orient='records'), 200
 
 
+# BASE = "https://movie-library-recommender.herokuapp.com"
 api.add_resource(status, "/")
-# api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
+
 api.add_resource(MovieTitleAccess, "/MovieInfoAccess/<string:movie_title>")
-# api.add_resource(MovieIdRecommender, "/MovieRecommender/<int:movie_id>")
 api.add_resource(MovieTitleRecommender, "/MovieRecommender/<string:movie_title>")
-# api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 api.add_resource(CoupleTitleRecommender, "/CoupleRecommender/<string:title_a>/<string:title_b>")
+
+# api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
+# api.add_resource(MovieIdRecommender, "/MovieRecommender/<int:movie_id>")
+# api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 
 if __name__ == "__main__":
     app.run(debug=True)

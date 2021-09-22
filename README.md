@@ -13,7 +13,32 @@ I saved the result as a csv file.
 
 The api is being hosted at https://movie-library-recommender.herokuapp.com/
 
-## Features
+## API FEATURES
 
+**GET** https://movie-library-recommender.herokuapp.com/MovieInfoAccess/<string:movie_title>
+
+INPUT: movie_title = the title of a movie
+
+RETURN:  the information about movie named movie_title in the JSON format of {"id" : Movie_Id, "title" : Movie_Title, "genres" : Movie_Genres[], "keywords" : Movie_Keywords[]}
+
+**GET** https://movie-library-recommender.herokuapp.com/MovieRecommender/<string:movie_title>
+
+INPUT: movie_title = the title of a movie that the user wants recommendations for
+
+RETURN: list of similar movies ranked in terms of their similarity to the genres and keywords of the input movie each in the JSON format of {"id" : Movie_Id, "title" : Movie_Title, "genres" : Movie_Genres[], "keywords" : Movie_Keywords[]} 
+
+**GET** https://movie-library-recommender.herokuapp.com/CoupleRecommender/<string:title_a>/<string:title_b>
+
+INPUT: title_a = title of the first movie for recommendations, title_b = title of the second movie for recommendations 
+
+RETURN: list of similar movies ranked in terms of their similarity to the genres and keywords of a combination of two input movies each in the JSON format of {"id" : Movie_Id, "title" : Movie_Title, "genres" : Movie_Genres[], "keywords" : Movie_Keywords[]} 
+
+## NOTES
+
+I removed API functionality that allowed users to access movies via their id numbers.
+Unique id numbers for each movie are included in the csv files and are used at certain points in my recommendation system.
+I did this so that there would not be any confusion between id numbers and movie titles that are just numbers.
+Examples include Roland Emmerich's 2012 and Brian Helgeland's 42.
+If I build a solution to this problem in the future, I will be sure to return access to these API routes. 
 
 
