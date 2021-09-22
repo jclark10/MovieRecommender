@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
+from random import randrange
 from nltk.corpus import wordnet
 from nltk.wsd import lesk
-from random import randrange
 
 
 class MovieLibrary:

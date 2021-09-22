@@ -66,8 +66,8 @@ class CoupleIdRecommender(Resource):
 
 class CoupleTitleRecommender(Resource):
     def get(self, title_a, title_b):
-        movie_a = movie_library.id_to_movie(title_a)
-        movie_b = movie_library.id_to_movie(title_b)
+        movie_a = movie_library.title_to_movie(title_a)
+        movie_b = movie_library.title_to_movie(title_b)
         movie_recs = movie_library.get_combined_recs(movie_a, movie_b)
         if movie_recs.empty:
             return {'data': 'ERROR: NO RECOMMENDATIONS FOUND'}, 404
@@ -76,11 +76,11 @@ class CoupleTitleRecommender(Resource):
 
 
 api.add_resource(status, "/")
-api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
+# api.add_resource(MovieIdAccess, "/MovieInfoAccess/<int:movie_id>")
 api.add_resource(MovieTitleAccess, "/MovieInfoAccess/<string:movie_title>")
-api.add_resource(MovieIdRecommender, "/MovieRecommender/<int:movie_id>")
+# api.add_resource(MovieIdRecommender, "/MovieRecommender/<int:movie_id>")
 api.add_resource(MovieTitleRecommender, "/MovieRecommender/<string:movie_title>")
-api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
+# api.add_resource(CoupleIdRecommender, "/CoupleRecommender/<int:id_a>/<int:id_b>")
 api.add_resource(CoupleTitleRecommender, "/CoupleRecommender/<string:title_a>/<string:title_b>")
 
 if __name__ == "__main__":
