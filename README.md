@@ -1,4 +1,4 @@
-# Movie Recommender
+# Movie Recommender API
 
 This api is a movie recommendation system that bases its suggestions on an overlap of genres and a similarity in key plot words.
 The api is also able to be given two movies and return suggestions that are similar to both of these movies.
